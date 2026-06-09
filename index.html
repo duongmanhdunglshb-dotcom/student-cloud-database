@@ -1,61 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Student Cloud Database</title> nâng cấp giao diện cho thật đẹp với bài này giống như 1 dự án của trường đại học hoặc 1 công ty
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Student Cloud Database</title>
 <style>
-body{
-font-family: Arial;
-margin:40px;
-}
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 40px;
+    background: #f4f7fc;
+    color: #333;
+  }
 
-input{
-padding:10px;
-margin:5px;
-}
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    text-shadow: 0 1px 1px #fff;
+  }
 
-button{
-padding:10px;
-}
+  /* Container for inputs and button */
+  .form-container {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-table{
-width:100%;
-margin-top:20px;
-border-collapse:collapse;
-}
+  input {
+    flex: 1 1 200px;
+    padding: 12px 15px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+  }
 
-th,td{
-border:1px solid #ccc;
-padding:10px;
-}
+  input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 6px #4a90e2;
+  }
+
+  button {
+    background: #4a90e2;
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.25s ease;
+    flex-shrink: 0;
+  }
+
+  button:hover {
+    background: #357abd;
+  }
+
+  /* Table styling */
+  table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  }
+
+  thead {
+    background-color: #4a90e2;
+    color: white;
+  }
+
+  th, td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e1e8f0;
+    font-size: 15px;
+  }
+
+  tbody tr {
+    background: white;
+    transition: background 0.3s ease;
+  }
+
+  tbody tr:hover {
+    background: #f0f8ff;
+  }
+
+  /* Action button */
+  tbody button {
+    background: #e94e4e;
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  tbody button:hover {
+    background: #c0392b;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .form-container {
+      flex-direction: column;
+    }
+
+    input, button {
+      flex: 1 1 100%;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      font-size: 14px;
+    }
+  }
 </style>
-
 </head>
 <body>
 
 <h1>Student Cloud Database</h1>
 
-<input id="fullname" placeholder="Full Name">
-<input id="studentcode" placeholder="Student Code">
-<input id="classname" placeholder="Class Name">
-
-<button onclick="addStudent()">
-Add Student
-</button>
+<div class="form-container">
+  <input id="fullname" placeholder="Full Name" />
+  <input id="studentcode" placeholder="Student Code" />
+  <input id="classname" placeholder="Class Name" />
+  <button onclick="addStudent()">Add Student</button>
+</div>
 
 <table>
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Code</th>
-<th>Class</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="studentList"></tbody>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Class</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="studentList"></tbody>
 </table>
 
 <script type="module">
@@ -64,79 +162,91 @@ import { createClient }
 from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const supabaseUrl = "https://lzajluuziausoascbjrp.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6YWpsdXV6aWF1c29hc2NianJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODA0NzEsImV4cCI6MjA5NjU1NjQ3MX0.aMLcgeP-x35f-_ta-_SRY0DN22p7ImaBd93NL-6H7MM";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6YWpsdXV6aWF1c29hc2JycCIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzgwOTgwNDcxLCJleHAiOjIwOTY1NTY0NzF9.aMLcgeP-x35f-_ta-_SRY0DN22p7ImaBd93NL-6H7MM";
 
 const supabase =
 createClient(supabaseUrl,supabaseKey);
 
 async function loadStudents(){
 
-const { data,error } =
-await supabase
-.from("students")
-.select("*")
-.order("id");
+    const { data,error } =
+    await supabase
+    .from("students")
+    .select("*")
+    .order("id");
 
-if(error){
-console.log(error);
-return;
-}
+    if(error){
+        console.log(error);
+        return;
+    }
 
-let html="";
+    let html="";
 
-data.forEach(student=>{
+    data.forEach(student=>{
 
-html += `
-<tr>
-<td>${student.id}</td>
-<td>${student.full_name}</td>
-<td>${student.student_code}</td>
-<td>${student.class_name}</td>
-<td>
-<button onclick="deleteStudent(${student.id})">
-Delete
-</button>
-</td>
-</tr>
-`;
-});
+        html += `
+        <tr>
+            <td>${student.id}</td>
+            <td>${student.full_name}</td>
+            <td>${student.student_code}</td>
+            <td>${student.class_name}</td>
+            <td>
+                <button onclick="deleteStudent(${student.id})">
+                Delete
+                </button>
+            </td>
+        </tr>
+        `;
+    });
 
-document.getElementById("studentList").innerHTML =
-html;
+    document.getElementById("studentList").innerHTML =
+    html;
 }
 
 window.addStudent = async ()=>{
 
-const full_name =
-document.getElementById("fullname").value;
+    const full_name =
+    document.getElementById("fullname").value.trim();
 
-const student_code =
-document.getElementById("studentcode").value;
+    const student_code =
+    document.getElementById("studentcode").value.trim();
 
-const class_name =
-document.getElementById("classname").value;
+    const class_name =
+    document.getElementById("classname").value.trim();
 
-await supabase
-.from("students")
-.insert([
-{
-full_name,
-student_code,
-class_name
-}
-]);
+    if(!full_name || !student_code || !class_name){
+      alert("Please fill in all fields.");
+      return;
+    }
 
-loadStudents();
+    await supabase
+    .from("students")
+    .insert([
+        {
+            full_name,
+            student_code,
+            class_name
+        }
+    ]);
+
+    // Clear inputs after adding
+    document.getElementById("fullname").value = "";
+    document.getElementById("studentcode").value = "";
+    document.getElementById("classname").value = "";
+
+    loadStudents();
 }
 
 window.deleteStudent = async(id)=>{
 
-await supabase
-.from("students")
-.delete()
-.eq("id",id);
+    if(!confirm("Are you sure you want to delete this student?")) return;
 
-loadStudents();
+    await supabase
+    .from("students")
+    .delete()
+    .eq("id",id);
+
+    loadStudents();
 }
 
 loadStudents();
