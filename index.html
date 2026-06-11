@@ -1,40 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Cloud Database</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <h1>Student Cloud Database</h1>
+  <!-- HERO BANNER -->
+  <header class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="crest">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="28,4 52,16 52,36 28,52 4,36 4,16" fill="none" stroke="#c9a84c" stroke-width="2"/>
+          <polygon points="28,10 46,19 46,34 28,46 10,34 10,19" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.5"/>
+          <text x="28" y="33" text-anchor="middle" fill="#c9a84c" font-size="16" font-family="serif" font-weight="bold">U</text>
+        </svg>
+      </div>
+      <p class="hero-eyebrow">DONG DO UNIVERSITY</p>
+      <h1 class="hero-title">Student Registry</h1>
+      <p class="hero-sub"> SupaBase Cloud Student Database Management System</p>
+    </div>
+    <div class="gold-ribbon"></div>
+  </header>
 
-  <input id="fullname" placeholder="Full Name">
-  <input id="studentcode" placeholder="Student Code">
-  <input id="classname" placeholder="Class Name">
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
 
-  <button onclick="addStudent()">
-    Add Student
-  </button>
+    <!-- ADD STUDENT CARD -->
+    <section class="card form-card">
+      <div class="card-header">
+        <span class="section-label">JOIN</span>
+        <h2 class="card-title">Add New Student</h2>
+      </div>
+      <div class="form-row">
+        <div class="field-group">
+          <label for="fullname">Full Name</label>
+          <input id="fullname" type="text" placeholder="...">
+        </div>
+        <div class="field-group">
+          <label for="studentcode">Student Code</label>
+          <input id="studentcode" type="text" placeholder="...">
+        </div>
+        <div class="field-group">
+          <label for="classname">Class</label>
+          <input id="classname" type="text" placeholder="...">
+        </div>
+        <div class="field-group btn-group">
+          <button onclick="addStudent()" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Student
+          </button>
+        </div>
+      </div>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Code</th>
-        <th>Class</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+    <!-- TABLE CARD -->
+    <section class="card table-card">
+      <div class="card-header">
+        <span class="section-label">RECORDS</span>
+        <h2 class="card-title">Manager </h2>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Name</th>
+              <th>Student Code</th>
+              <th>Class</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="studentList">
+            <tr class="empty-row">
+              <td colspan="5">
+                <div class="empty-state">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <p>No students enrolled yet.<br>Add your first student above.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-    <tbody id="studentList"></tbody>
-  </table>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="gold-ribbon"></div>
+    <p>© 2026 DONGDO University &nbsp;·&nbsp; Student Information System &nbsp;·&nbsp; All rights reserved</p>
+  </footer>
 
   <script type="module" src="script.js"></script>
-
 </body>
 
 </html>

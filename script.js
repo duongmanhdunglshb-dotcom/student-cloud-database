@@ -22,10 +22,30 @@ async function loadStudents() {
     return;
   }
 
+  const tbody = document.getElementById("studentList");
+
+  if (!data || data.length === 0) {
+    tbody.innerHTML = `
+      <tr class="empty-row">
+        <td colspan="5">
+          <div class="empty-state">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <p>No students enrolled yet.<br>Add your first student above.</p>
+          </div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
   let html = "";
 
   data.forEach(student => {
-
     html += `
     <tr>
       <td>${student.id}</td>
@@ -33,37 +53,43 @@ async function loadStudents() {
       <td>${student.student_code}</td>
       <td>${student.class_name}</td>
       <td>
-        <button onclick="deleteStudent(${student.id})">
-          Delete
+        <button class="btn-delete" onclick="deleteStudent(${student.id})">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+            <path d="M10 11v6M14 11v6"/>
+          </svg>
+          Remove
         </button>
       </td>
     </tr>
     `;
   });
 
-  document.getElementById("studentList").innerHTML = html;
+  tbody.innerHTML = html;
 }
 
 window.addStudent = async () => {
 
   const full_name =
-    document.getElementById("fullname").value;
+    document.getElementById("fullname").value.trim();
 
   const student_code =
-    document.getElementById("studentcode").value;
+    document.getElementById("studentcode").value.trim();
 
   const class_name =
-    document.getElementById("classname").value;
+    document.getElementById("classname").value.trim();
+
+  if (!full_name || !student_code || !class_name) return;
 
   await supabase
     .from("students")
-    .insert([
-      {
-        full_name,
-        student_code,
-        class_name
-      }
-    ]);
+    .insert([{ full_name, student_code, class_name }]);
+
+  // Clear inputs
+  document.getElementById("fullname").value = "";
+  document.getElementById("studentcode").value = "";
+  document.getElementById("classname").value = "";
 
   loadStudents();
 }
