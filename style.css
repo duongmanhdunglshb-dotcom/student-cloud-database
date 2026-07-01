@@ -1,32 +1,36 @@
 /* ============================================
-   NATIONAL UNIVERSITY — DARK IMMERSIVE THEME
+   DONG DO UNIVERSITY — THE STUDENT LEDGER
+   A bound academic register: pine-green cover,
+   brass fittings, ruled ivory pages.
    ============================================ */
 
 :root {
-  --navy: #06111f;
-  --navy-mid: #0d1e35;
-  --navy-glass: rgba(8, 20, 40, 0.72);
-  --navy-card: rgba(12, 26, 50, 0.80);
-  --gold: #c9a84c;
-  --gold-light: #e2c476;
-  --gold-dim: rgba(201, 168, 76, 0.18);
-  --gold-border: rgba(201, 168, 76, 0.30);
-  --white: #ffffff;
-  --text-bright: rgba(255, 255, 255, 0.92);
-  --text-mid: rgba(255, 255, 255, 0.60);
-  --text-dim: rgba(255, 255, 255, 0.35);
-  --red: #f87171;
-  --red-glow: rgba(248, 113, 113, 0.25);
+  --paper: #f3ead9;
+  --paper-deep: #e9dcc0;
+  --paper-line: rgba(36, 28, 19, 0.09);
+
+  --ink: #241c13;
+  --ink-soft: rgba(36, 28, 19, 0.62);
+  --ink-faint: rgba(36, 28, 19, 0.38);
+
+  --pine: #17281f;
+  --pine-mid: #1f3b30;
+  --pine-light: #2c5142;
+
+  --brass: #a9873f;
+  --brass-light: #cfab63;
+  --brass-dim: rgba(169, 135, 63, 0.28);
+
+  --redink: #8b2e2e;
+  --redink-light: #b14b4b;
 
   --font-display: 'Playfair Display', Georgia, serif;
+  --font-accent: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
-
-  --glass-blur: blur(18px);
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45), 0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  --radius-sm: 4px;
+  --radius-md: 6px;
 }
 
 *,
@@ -37,226 +41,246 @@
   padding: 0;
 }
 
-/* ============================================
-   FULL-PAGE BACKGROUND
-   ============================================ */
 body {
   font-family: var(--font-body);
   min-height: 100vh;
+  color: var(--ink);
+  background: var(--pine);
   display: flex;
-  flex-direction: column;
-  color: var(--text-bright);
-
-  /* campus image covers ENTIRE page */
-  background-image:
-    linear-gradient(180deg,
-      rgba(6, 17, 31, 0.70) 0%,
-      rgba(6, 17, 31, 0.82) 30%,
-      rgba(6, 17, 31, 0.90) 60%,
-      rgba(6, 17, 31, 0.97) 100%),
-    url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=1800&q=85&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center 30%;
-  background-attachment: fixed;
+  justify-content: center;
+  padding: 28px 16px;
 }
 
 /* ============================================
-   HERO
+   LEDGER SHELL
    ============================================ */
-.hero {
-  position: relative;
+.ledger {
+  width: 100%;
+  max-width: 1080px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 64px 24px 0;
-  text-align: center;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    0 2px 0 rgba(255, 255, 255, 0.04) inset;
 }
 
-.hero-content {
+/* Left binding: dark pine spine with brass rivets */
+.spine {
+  flex: 0 0 40px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.35) 0%, transparent 30%),
+    linear-gradient(180deg, var(--pine) 0%, var(--pine-mid) 100%);
+  border-right: 1px solid rgba(169, 135, 63, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  max-width: 640px;
+  padding: 26px 0;
+  position: relative;
+}
+
+.rivet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--brass-light), var(--brass) 60%, #7a5f28 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 46px;
+  flex-shrink: 0;
+}
+
+.spine-label {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(207, 171, 99, 0.65);
+  white-space: nowrap;
+}
+
+.pages {
+  flex: 1;
+  min-width: 0;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   COVER (hero)
+   ============================================ */
+.cover {
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(169, 135, 63, 0.16), transparent 60%),
+    linear-gradient(155deg, var(--pine-mid) 0%, var(--pine) 78%);
+  padding: 56px 32px 40px;
+  text-align: center;
+  position: relative;
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(169, 135, 63, 0.28);
+  pointer-events: none;
+}
+
+.cover-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 620px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .crest {
-  filter: drop-shadow(0 0 16px rgba(201, 168, 76, 0.55));
-  margin-bottom: 4px;
+  filter: drop-shadow(0 0 14px rgba(169, 135, 63, 0.4));
+  margin-bottom: 2px;
 }
 
-.hero-eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1.12;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
-}
-
-.hero-sub {
-  font-size: 14px;
-  color: var(--text-mid);
+.cover-eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 15px;
   letter-spacing: 0.03em;
+  color: var(--brass-light);
+}
+
+.cover-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: #f6ecd8;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  margin-top: 4px;
+}
+
+.cover-sub {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(246, 236, 216, 0.45);
   margin-top: 2px;
 }
 
-/* Stats bar under hero title */
-.hero-stats {
+/* Seals = stat badges styled like wax/embossed seals */
+.seals {
   display: flex;
-  gap: 32px;
-  margin-top: 28px;
-  padding: 18px 36px;
-  background: var(--navy-glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius-md);
+  gap: 22px;
+  margin-top: 30px;
 }
 
-.stat-item {
+.seal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
+  width: 92px;
+  padding: 16px 10px 14px;
+  border: 1px solid var(--brass-dim);
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  justify-content: center;
+  background: radial-gradient(circle at 40% 30%, rgba(169, 135, 63, 0.10), transparent 70%);
 }
 
-.stat-num {
+.seal-num {
   font-family: var(--font-display);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--gold-light);
+  color: var(--brass-light);
   line-height: 1;
 }
 
-.stat-label {
-  font-size: 10px;
+.seal-label {
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: rgba(246, 236, 216, 0.5);
 }
 
-.stat-divider {
-  width: 1px;
-  background: var(--gold-border);
-  align-self: stretch;
-}
-
-/* Gold ribbon */
-.gold-ribbon {
-  height: 3px;
-  width: 100%;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      var(--gold) 35%,
-      var(--gold-light) 50%,
-      var(--gold) 65%,
-      transparent 100%);
-  margin-top: 40px;
-  opacity: 0.7;
+/* Fold: transition shadow from cover to paper */
+.fold {
+  height: 14px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent);
 }
 
 /* ============================================
-   MAIN LAYOUT
+   PAPER SHEET / LEAVES
    ============================================ */
-.main-content {
+.sheet {
   flex: 1;
-  width: 100%;
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 40px 24px 64px;
+  padding: 8px 32px 12px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 8px;
 }
 
-/* ============================================
-   GLASS CARDS
-   ============================================ */
-.card {
-  background: var(--navy-card);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-  /* subtle gold top-line */
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.45),
-    0 1px 0 rgba(255, 255, 255, 0.05) inset,
-    0 -1px 0 rgba(201, 168, 76, 0.0) inset;
+.leaf {
+  background: repeating-linear-gradient(180deg,
+      transparent 0,
+      transparent 37px,
+      var(--paper-line) 38px);
+  padding: 30px 4px 22px;
 }
 
-.card::before {
-  content: '';
-  display: block;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.6;
+.leaf-form {
+  border-bottom: 1px dashed rgba(36, 28, 19, 0.18);
 }
 
-.card-header {
-  padding: 20px 28px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+.leaf-head {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 14px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
 }
 
-.header-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  color: var(--gold);
-}
-
-.card-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.section-label {
+.leaf-tag {
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--gold);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  opacity: 0.8;
+  color: var(--brass);
+  border: 1px solid var(--brass-dim);
+  padding: 3px 9px;
+  border-radius: 20px;
 }
 
-.card-title {
+.leaf-title {
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-bright);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.leaf-rule {
+  flex: 1;
+  height: 1px;
+  min-width: 40px;
+  background: linear-gradient(90deg, var(--brass-dim), transparent);
 }
 
 /* ============================================
    FORM
    ============================================ */
-.form-card .form-row {
+.form-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  padding: 22px 28px 28px;
+  gap: 18px;
   align-items: flex-end;
 }
 
@@ -269,38 +293,38 @@ body {
 }
 
 .field-group label {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--text-mid);
+  color: var(--ink-soft);
   text-transform: uppercase;
 }
 
 .field-group input {
-  padding: 11px 14px;
-  border: 1.5px solid rgba(255, 255, 255, 0.10);
-  border-radius: var(--radius-sm);
+  padding: 11px 4px;
+  border: none;
+  border-bottom: 1.5px solid rgba(36, 28, 19, 0.28);
+  border-radius: 0;
   font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--text-bright);
-  background: rgba(255, 255, 255, 0.06);
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: transparent;
+  transition: border-color 0.2s;
   width: 100%;
 }
 
 .field-group input:focus {
   outline: none;
-  border-color: var(--gold);
-  background: rgba(255, 255, 255, 0.09);
-  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+  border-color: var(--brass);
 }
 
 .field-group input::placeholder {
-  color: var(--text-dim);
+  color: var(--ink-faint);
+  font-style: italic;
 }
 
 .btn-group {
-  min-width: 160px;
+  min-width: 170px;
   flex: 0 1 auto;
 }
 
@@ -309,24 +333,23 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 22px;
-  background: linear-gradient(135deg, #c9a84c 0%, #a07830 100%);
-  color: var(--navy);
-  border: none;
+  padding: 11px 20px;
+  background: linear-gradient(155deg, var(--pine-light) 0%, var(--pine) 100%);
+  color: #f3ead9;
+  border: 1px solid var(--brass);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   width: 100%;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #e2c476 0%, #c9a84c 100%);
-  box-shadow: 0 6px 24px rgba(201, 168, 76, 0.50);
+  background: linear-gradient(155deg, var(--pine) 0%, var(--pine-light) 100%);
+  box-shadow: 0 4px 16px rgba(23, 40, 31, 0.35);
   transform: translateY(-1px);
 }
 
@@ -335,12 +358,8 @@ body {
 }
 
 /* ============================================
-   TABLE
+   TABLE / LEDGER ROWS
    ============================================ */
-.table-card {
-  overflow: hidden;
-}
-
 .table-wrapper {
   overflow-x: auto;
 }
@@ -351,26 +370,24 @@ table {
 }
 
 thead tr {
-  background: rgba(201, 168, 76, 0.08);
-  border-bottom: 1px solid var(--gold-border);
+  border-bottom: 1.5px solid var(--ink);
 }
 
 th {
-  padding: 13px 20px;
+  padding: 0 14px 10px;
   text-align: left;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--gold);
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
   text-transform: uppercase;
   white-space: nowrap;
 }
 
 td {
-  padding: 14px 20px;
+  padding: 10px 14px;
   font-size: 14px;
-  color: var(--text-bright);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--ink);
   vertical-align: middle;
 }
 
@@ -379,132 +396,164 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background: rgba(201, 168, 76, 0.06);
+  background: rgba(169, 135, 63, 0.08);
 }
 
-tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* ID badge */
+/* Row number */
 td:first-child {
-  font-weight: 700;
-  color: var(--gold);
-  font-size: 13px;
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--brass);
+  font-size: 12.5px;
 }
 
 /* Student code */
 td:nth-child(3) {
-  font-family: 'Courier New', monospace;
-  font-size: 13px;
-  color: var(--text-mid);
-  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
 }
 
 /* Class badge */
 td:nth-child(4) span {
   display: inline-block;
   padding: 3px 10px;
-  background: rgba(201, 168, 76, 0.12);
-  border: 1px solid var(--gold-border);
+  border: 1px solid var(--brass-dim);
   border-radius: 20px;
-  font-size: 12px;
-  color: var(--gold-light);
+  font-size: 11.5px;
+  color: var(--pine-mid);
+  font-weight: 600;
 }
 
-/* Delete button */
+/* Delete = void stamp */
 .btn-delete {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
+  padding: 6px 13px;
   background: transparent;
-  color: var(--red);
-  border: 1.5px solid rgba(248, 113, 113, 0.25);
+  color: var(--redink);
+  border: 1.5px solid rgba(139, 46, 46, 0.32);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.18s;
 }
 
 .btn-delete:hover {
-  background: var(--red-glow);
-  border-color: var(--red);
-  box-shadow: 0 0 12px rgba(248, 113, 113, 0.25);
+  background: rgba(139, 46, 46, 0.08);
+  border-color: var(--redink);
+  color: var(--redink-light);
 }
 
 /* Empty state */
 .empty-row td {
   text-align: center;
-  padding: 56px 20px;
+  padding: 50px 20px;
 }
 
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .empty-state p {
-  font-size: 14px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 15px;
   line-height: 1.6;
-  color: var(--text-dim);
+  color: var(--ink-faint);
 }
 
 /* ============================================
-   FOOTER
+   COLOPHON / FOOTER
    ============================================ */
-.site-footer {
-  background: rgba(4, 10, 20, 0.85);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid rgba(201, 168, 76, 0.15);
+.colophon {
+  border-top: 1px solid rgba(36, 28, 19, 0.14);
   text-align: center;
+  padding: 16px 24px 22px;
 }
 
-.site-footer p {
-  font-size: 12px;
-  color: var(--text-dim);
-  padding: 20px 24px;
-  letter-spacing: 0.06em;
+.colophon p {
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+}
+
+/* ============================================
+   FOCUS STATE (accessibility)
+   ============================================ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 640px) {
-  .hero {
-    padding: 48px 16px 0;
+@media (max-width: 720px) {
+  body {
+    padding: 0;
   }
 
-  .hero-title {
+  .ledger {
+    flex-direction: column;
+    border-radius: 0;
+  }
+
+  .spine {
+    flex-direction: row;
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 10px 16px;
+    border-right: none;
+    border-bottom: 1px solid rgba(169, 135, 63, 0.35);
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .rivet {
+    margin-bottom: 0;
+  }
+
+  .spine-label {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    margin-left: 8px;
+  }
+
+  .cover {
+    padding: 40px 20px 32px;
+  }
+
+  .cover-title {
     font-size: 1.9rem;
   }
 
-  .hero-stats {
-    flex-direction: column;
-    gap: 16px;
-    padding: 18px 24px;
+  .seals {
+    gap: 12px;
   }
 
-  .stat-divider {
-    width: 100%;
-    height: 1px;
+  .seal {
+    width: 76px;
   }
 
-  .main-content {
-    padding: 28px 16px 48px;
+  .sheet {
+    padding: 8px 18px 12px;
   }
 
-  .card-header {
-    padding: 16px 18px 14px;
-  }
-
-  .form-card .form-row {
-    padding: 16px 18px 20px;
+  .leaf {
+    padding: 24px 2px 18px;
   }
 
   .field-group {
@@ -513,6 +562,6 @@ td:nth-child(4) span {
 
   th,
   td {
-    padding: 12px 14px;
+    padding: 10px 10px;
   }
 }
