@@ -1,14 +1,14 @@
 // Import hàm createClient từ thư viện Supabase
 import { createClient }
-from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+  from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 // URL của project Supabase
 const supabaseUrl =
-"https://lzajluuziausoascbjrp.supabase.co";
+  "https://lzajluuziausoascbjrp.supabase.co";
 
 // API Key dùng để xác thực quyền truy cập database
 const supabaseKey =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6YWpsdXV6aWF1c29hc2NianJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODA0NzEsImV4cCI6MjA5NjU1NjQ3MX0.aMLcgeP-x35f-_ta-_SRY0DN22p7ImaBd93NL-6H7MM";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6YWpsdXV6aWF1c29hc2NianJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODA0NzEsImV4cCI6MjA5NjU1NjQ3MX0.aMLcgeP-x35f-_ta-_SRY0DN22p7ImaBd93NL-6H7MM";
 
 // Tạo kết nối đến Supabase
 const supabase = createClient(supabaseUrl, supabaseKey);
